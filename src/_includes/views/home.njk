@@ -1,0 +1,42 @@
+{%- from "partials/macros.njk" import cta, card -%}
+{%- from "partials/icons.njk" import icon -%}
+{%- set L = i18n[lang] -%}
+{%- set posts = collections | coll("posts", lang) -%}
+{%- set canonical = page.url | abs(site.url) -%}
+{%- set waHref = "https://wa.me/" + site.phone + "?text=" + ((site.wa_intro + " " + home.h1 + "\n" + canonical) | encode) -%}
+{%- set editorial = collections | coll("pagesLive", lang) | pageByFile("editorial-policy") -%}
+<section class="hero"><div class="wrap">
+<p class="hero-kicker">{{ home.kicker }}</p>
+<h1>{{ home.h1 }}</h1>
+<p class="hero-lead">{{ home.lead }}</p>
+<form action="{{ '/search/' | lpath(lang) }}" class="hero-search" method="get" role="search"><label class="sr-only" for="q-hero">{{ L.search_site }}</label><input class="field" id="q-hero" name="q" placeholder="{{ home.search_placeholder }}" type="search"><button class="btn" type="submit">{{ icon("SEARCH") }}{{ L.search_btn }}</button></form>
+<ul aria-label="{{ L.guide_sections }}" class="hero-chips">{% for s in sections.items %}{% if s.in_menu %}<li><a href="{{ ('/' + s.slug + '/') | lpath(lang) }}">{{ s.name }}</a></li>{% endif %}{% endfor %}</ul>
+</div></section>
+
+<section class="block"><div class="wrap"><div class="block-head"><div><h2>{{ home.sections_h2 }}</h2><p>{{ home.sections_p }}</p></div></div>
+<ul class="sec-grid">{% for s in sections.items %}{% if s.in_menu %}<li><a class="sec-card" href="{{ ('/' + s.slug + '/') | lpath(lang) }}"><span class="sec-icon">{{ icon(s.icon or "DOC") }}</span><span class="sec-name">{{ s.name }}</span><span class="sec-desc">{{ s.description }}</span><span class="sec-go">{{ L.read_section }} {{ icon("ARROW") }}</span></a></li>{% endif %}{% endfor %}</ul>
+</div></section>
+
+{%- if posts.length %}
+<section class="block tint" data-carousel="true" data-tabs="true"><div class="wrap"><div class="block-head"><div><h2>{{ home.latest_h2 }}</h2><p>{{ home.latest_p }}</p></div>
+<div class="car-btns"><button aria-label="{{ L.prev }}" class="car-btn" data-dir="prev" type="button">{{ icon("PREV") }}</button><button aria-label="{{ L.next }}" class="car-btn" data-dir="next" type="button">{{ icon("NEXT") }}</button></div></div>
+<div aria-label="{{ L.guide_sections }}" class="tabs" role="tablist"><button aria-controls="tp-latest" aria-selected="true" class="tab" id="tab-latest" role="tab" type="button">{{ L.latest_tab }}</button>{% for s in sections.items %}<button aria-controls="tp-{{ s.slug }}" aria-selected="false" class="tab" id="tab-{{ s.slug }}" role="tab" type="button">{{ s.name }}</button>{% endfor %}</div>
+<div aria-labelledby="tab-latest" class="tab-panel carousel" id="tp-latest" role="tabpanel"><ul class="card-list">{% for p in posts | take(8) %}<li>{{ card(p, p.data.section | sectionOf(sections), lang) }}</li>{% endfor %}</ul><p class="tab-more"><a class="see-all" href="{{ '/blog/' | lpath(lang) }}">{{ L.browse_all }} {{ icon("ARROW") }}</a></p></div>
+{%- for s in sections.items %}
+<div aria-labelledby="tab-{{ s.slug }}" class="tab-panel carousel" id="tp-{{ s.slug }}" role="tabpanel"><ul class="card-list">{% for p in posts | inSection(s.slug, sections) | take(8) %}<li>{{ card(p, s, lang) }}</li>{% endfor %}</ul><p class="tab-more"><a class="see-all" href="{{ ('/' + s.slug + '/') | lpath(lang) }}">{{ L.all_in }} {{ s.name }} {{ icon("ARROW") }}</a></p></div>
+{%- endfor %}
+</div></section>
+{%- endif %}
+
+<section class="block"><div class="wrap"><div class="block-head"><div><h2>{{ home.tools_h2 }}</h2><p>{{ home.tools_p }}</p></div><a class="see-all" href="{{ '/tools/' | lpath(lang) }}">{{ L.all_tools }} {{ icon("ARROW") }}</a></div>
+<ul class="tool-grid">{% for t in tools.items %}<li><a class="tool-card" href="{{ '/tools/' | lpath(lang) }}#{{ t.id }}"><span class="sec-icon">{{ icon("CALC") }}</span><span><strong>{{ t.name }}</strong><span>{{ t.desc }}</span></span></a></li>{% endfor %}</ul>
+</div></section>
+
+<section aria-label="{{ L.contact_aria }}" class="cta-band"><div class="wrap">{{ cta(L.cta_default, "home-cta", waHref, "tel:+" + site.phone, L) }}</div></section>
+
+<section aria-label="{{ L.how_we_work }}" class="trust-band"><div class="wrap"><ul class="trust-list">
+{%- set tIcons = ["DOC", "REFRESH", "PHONE"] %}
+{%- for tr in L.trust %}
+<li><span class="t-icon">{{ icon(tIcons[loop.index0]) }}</span><span><strong>{{ tr[0] }}</strong>{{ tr[1] }}</span></li>
+{%- endfor %}
+{%- if editorial %}<li class="more"><a href="{{ editorial.url }}">{{ L.ed_policy }}</a></li>{% endif %}</ul></div></section>

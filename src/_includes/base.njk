@@ -1,0 +1,68 @@
+{%- from "partials/icons.njk" import icon -%}
+{%- set L = i18n[lang] -%}
+{%- set pageTitle = (title + " | " + site.name) if (title and not isHome) else ((site.tagline + " | " + site.name) if site.tagline else site.name) -%}
+{%- set metaDesc = (description or site.description) | plain -%}
+{%- set canonical = page.url | abs(site.url) -%}
+{%- set alt = page.url | altUrl(lang, collections) -%}
+{%- set h1Text = h1 or title or site.name -%}
+{%- set waText = site.wa_intro + " " + h1Text + "\n" + canonical -%}
+{%- set waHref = "https://wa.me/" + site.phone + "?text=" + (waText | encode) -%}
+{%- set telHref = "tel:+" + site.phone -%}
+<!doctype html>
+<html lang="{{ lang }}" dir="{{ L.dir }}">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{ pageTitle }}</title>
+<meta name="description" content="{{ metaDesc }}">
+<link rel="canonical" href="{{ canonical }}">
+{%- if alt %}
+{%- set arUrl = (page.url if lang == "ar" else alt) | abs(site.url) -%}
+{%- set enUrl = (alt if lang == "ar" else page.url) | abs(site.url) %}
+<link rel="alternate" hreflang="ar" href="{{ arUrl }}">
+<link rel="alternate" hreflang="en" href="{{ enUrl }}">
+<link rel="alternate" hreflang="x-default" href="{{ arUrl }}">
+{%- endif %}
+<meta name="robots" content="{{ robots or 'index, follow, max-image-preview:large' }}">
+<meta name="theme-color" content="{{ brand.theme_color }}">
+<meta property="og:locale" content="{{ L.og_locale }}">
+{%- if alt %}
+<meta property="og:locale:alternate" content="{{ i18n[L.other].og_locale }}">
+{%- endif %}
+<meta property="og:site_name" content="{{ site.name }}">
+<meta property="og:type" content="{{ 'article' if ogType == 'article' else 'website' }}">
+<meta property="og:title" content="{{ title or site.name }}">
+<meta property="og:description" content="{{ metaDesc }}">
+<meta property="og:url" content="{{ canonical }}">
+{%- if image %}
+<meta property="og:image" content="{{ image | abs(site.url) }}">
+<meta name="twitter:card" content="summary_large_image">
+{%- else %}
+<meta name="twitter:card" content="summary">
+{%- endif %}
+{%- if site.google_verification and isHome and lang == "ar" %}
+<meta name="google-site-verification" content="{{ site.google_verification }}">
+{%- endif %}
+{%- if site.bing_verification and isHome and lang == "ar" %}
+<meta name="msvalidate.01" content="{{ site.bing_verification }}">
+{%- endif %}
+<link rel="icon" href="/assets/img/icon.svg" type="image/svg+xml">
+<link rel="alternate" type="application/atom+xml" title="{{ site.name }}" href="{{ '/feed.xml' | lpath(lang) }}">
+{%- for f in brand.preload %}
+<link rel="preload" href="/assets/fonts/{{ f if lang == 'ar' else (f | replace('-arabic-', '-latin-')) }}" as="font" type="font/woff2" crossorigin>
+{%- endfor %}
+<link rel="stylesheet" href="/assets/css/site.css?v={{ build.v }}">
+<script>document.documentElement.className+=' js';</script>
+{% include "partials/schema.njk" %}
+</head>
+<body class="{{ bodyClass or 'is-page no-sidebar' }}">
+<a class="skip-link" href="#main-content">{{ L.skip }}</a>
+{% include "partials/header.njk" %}
+<main id="main-content" tabindex="-1">
+{{ content | safe }}
+</main>
+{% include "partials/footer.njk" %}
+<script>window.SITE={{ { phone: site.phone, waIntro: site.wa_intro } | json | safe }};</script>
+<script src="/assets/js/site.js?v={{ build.v }}" defer></script>
+</body>
+</html>

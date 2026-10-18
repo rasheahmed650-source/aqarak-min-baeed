@@ -1,0 +1,13 @@
+{%- set posts = collections | coll("posts", lang) -%}
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="{{ lang }}">
+<title>{{ site.name | xml }}</title>
+<subtitle>{{ site.description | xml }}</subtitle>
+<link href="{{ ('/feed.xml' | lpath(lang)) | abs(site.url) }}" rel="self"/>
+<link href="{{ ('/' | lpath(lang)) | abs(site.url) }}"/>
+<id>{{ ('/' | lpath(lang)) | abs(site.url) }}</id>
+<updated>{% if posts.length %}{{ (posts[0].data.updated or posts[0].data.date) | isoFull }}{% else %}{{ "2026-10-10" | isoFull }}{% endif %}</updated>
+{%- for p in posts | take(20) %}
+<entry><title>{{ p.data.title | xml }}</title><link href="{{ p.url | abs(site.url) }}"/><id>{{ p.url | abs(site.url) }}</id><updated>{{ (p.data.updated or p.data.date) | isoFull }}</updated><summary>{{ p.data.description | xml }}</summary><author><name>{{ (p.data.author or site.default_author) | xml }}</name></author></entry>
+{%- endfor %}
+</feed>

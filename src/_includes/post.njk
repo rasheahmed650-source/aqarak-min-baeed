@@ -1,0 +1,68 @@
+---
+layout: base.njk
+bodyClass: is-post has-sidebar
+ogType: article
+pageType: post
+---
+{%- from "partials/icons.njk" import icon -%}
+{%- from "partials/macros.njk" import cta, card -%}
+{%- set L = i18n[lang] -%}
+{%- set sec = section | sectionOf(sections) -%}
+{%- set canonical = page.url | abs(site.url) -%}
+{%- set waHref = "https://wa.me/" + site.phone + "?text=" + ((site.wa_intro + " " + title + "\n" + canonical) | encode) -%}
+{%- set telHref = "tel:+" + site.phone -%}
+{%- set livePages = collections | coll("pagesLive", lang) -%}
+{%- set t = content | withToc -%}
+{%- set extra = [] -%}
+{%- if actions and actions.length %}{% set _x = extra.push({id: "next-actions", text: L.next_actions}) %}{% endif -%}
+{%- if faq and faq.length %}{% set _x = extra.push({id: "faq", text: L.faq}) %}{% endif -%}
+{%- if sources and sources.length %}{% set _x = extra.push({id: "sources", text: L.sources}) %}{% endif -%}
+{%- set tocItems = t.items.concat(extra) -%}
+{%- set twin = page.url | altUrl(lang, collections) -%}
+<div class="wrap layout"><div class="main"><article class="article" data-pagefind-body>
+<nav aria-label="{{ L.breadcrumb }}" class="breadcrumb" data-pagefind-ignore><ol><li><a href="{{ '/' | lpath(lang) }}">{{ L.home }}</a></li><li><a href="{{ '/blog/' | lpath(lang) }}">{{ L.blog }}</a></li><li><a href="{{ ('/' + sec.slug + '/') | lpath(lang) }}">{{ sec.name }}</a></li><li><span aria-current="page">{{ title }}</span></li></ol></nav>
+<header class="article-head"><ul class="post-chips" data-pagefind-ignore><li><a class="chip-cat" href="{{ ('/' + sec.slug + '/') | lpath(lang) }}">{{ sec.name }}</a></li></ul>
+<h1>{{ title }}</h1>
+<p class="byline" data-pagefind-ignore><span>{{ L.by }} {{ author or site.default_author }}</span><span>{{ L.published }} <time datetime="{{ date | isoDate }}">{{ date | ldate(lang) }}</time></span></p></header>
+{%- if image %}
+<figure class="post-hero-img"><img src="{{ image }}" alt="{{ image_alt }}" loading="eager" fetchpriority="high" sizes="(min-width: 1024px) 760px, 100vw">{% if image_caption %}<figcaption>{{ image_caption }}</figcaption>{% endif %}</figure>
+{%- endif %}
+<div class="post-body">
+<p class="article-meta">{% if reviewer %}{{ L.reviewed }}: {% if reviewer_url %}<a href="{{ reviewer_url }}">{{ reviewer }}</a>{% else %}{{ reviewer }}{% endif %} · {% endif %}{{ L.updated }}: <time datetime="{{ (updated or date) | isoDate }}">{{ (updated or date) | ldate(lang) }}</time></p>
+{%- if lang == "en" and translation_of and L.translated_note %}
+<p class="translated-note" data-pagefind-ignore>{{ L.translated_note }}{% if twin %} <a href="{{ twin }}" hreflang="ar" lang="ar">{{ L.original }}</a>{% endif %}</p>
+{%- endif %}
+{%- if answer %}
+<div class="answer-box"><p>{{ answer }}</p></div>
+{%- endif %}
+{%- if tocItems.length > 4 %}
+<nav aria-label="{{ L.toc }}" class="toc" data-pagefind-ignore><p class="toc-title">{{ L.toc }}</p><ol>{% for i in tocItems %}<li><a href="#{{ i.id }}">{{ i.text }}</a></li>{% endfor %}</ol></nav>
+{%- endif %}
+{{ t.html | safe }}
+{%- if (pros and pros.length) or (cons and cons.length) %}
+<div class="pros-cons">{% if pros and pros.length %}<div class="pros"><h3>{{ L.pros }}</h3><ul>{% for x in pros %}<li>{{ x }}</li>{% endfor %}</ul></div>{% endif %}{% if cons and cons.length %}<div class="cons"><h3>{{ L.cons }}</h3><ul>{% for x in cons %}<li>{{ x }}</li>{% endfor %}</ul></div>{% endif %}</div>
+{%- endif %}
+{%- if actions and actions.length %}
+<div class="action-box"><h2 id="next-actions">{{ L.next_actions }}</h2><ol>{% for x in actions %}<li>{{ x }}</li>{% endfor %}</ol></div>
+{%- endif %}
+{%- if faq and faq.length %}
+<section class="faq"><h2 id="faq">{{ L.faq }}</h2>{% for f in faq %}<h3>{{ f.q }}</h3><p>{{ f.a }}</p>{% endfor %}</section>
+{%- endif %}
+{%- if sources and sources.length %}
+<section class="sources"><h2 id="sources">{{ L.sources }}</h2><ol>{% for s in sources %}<li>{% if s.url %}<a href="{{ s.url }}" rel="noopener">{{ s.name }}</a>{% else %}{{ s.name }}{% endif %}{% if s.date %}{{ "، " if lang == "ar" else ", " }}{{ s.date | anyDate(lang) }}{% endif %}.</li>{% endfor %}</ol></section>
+{%- endif %}
+{%- set related = collections | coll("posts", lang) | inSection(sec.slug, sections) | except(page.url) | take(3) -%}
+{%- if related.length %}
+<aside class="read-also" data-pagefind-ignore><p class="box-title">{{ L.read_also }}</p><ul>{% for r in related %}<li><a href="{{ r.url }}">{{ r.data.title }}</a></li>{% endfor %}</ul></aside>
+{%- endif %}
+{%- if next_url and next_title %}
+<p class="next-step" data-pagefind-ignore><span>{{ L.next_step }}</span> <a href="{{ next_url }}">{{ next_title }}</a></p>
+{%- endif %}
+</div>
+{{ cta(sec.cta or L.cta_default, "section-cta", waHref, telHref, L) }}
+<div class="author-box" data-pagefind-ignore><span aria-hidden="true" class="author-ph">{{ icon("USER") }}</span><div><p class="a-name">{{ L.written_by }} {{ author or site.default_author }}</p>{%- set aboutP = livePages | pageByFile("about") -%}{%- set edP = livePages | pageByFile("editorial-policy") -%}
+<p>{{ site.author_note }}{% if aboutP or edP %} {{ L.meet }} {% if aboutP %}<a href="{{ aboutP.url }}">{{ L.team }}</a>{% endif %}{% if aboutP and edP %}{{ L.and }}{% endif %}{% if edP %}<a href="{{ edP.url }}">{{ L.ed_policy }}</a>{% endif %}.{% endif %}</p></div></div>
+<p class="more-sec" data-pagefind-ignore><a class="see-all" href="{{ ('/' + sec.slug + '/') | lpath(lang) }}">{{ L.more_in }} {{ sec.name }} {{ icon("ARROW") }}</a></p>
+</article></div>
+{% include "partials/sidebar.njk" %}
+</div>

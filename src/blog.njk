@@ -1,0 +1,16 @@
+---
+pagination:
+  data: collections.posts
+  size: 12
+  alias: list
+  generatePageOnEmptyData: true
+permalink: "{% if pagination.pageNumber == 0 %}/blog/{% else %}/blog/page/{{ pagination.pageNumber + 1 }}/{% endif %}"
+layout: base.njk
+bodyClass: is-list no-sidebar
+pageType: list
+eleventyComputed:
+  title: "{{ i18n[lang].blog_h1 }}{% if pagination.pageNumber > 0 %} ({{ i18n[lang].page_n }} {{ pagination.pageNumber + 1 }}){% endif %}"
+  h1: "{{ i18n[lang].blog_h1 }}"
+  description: "{{ i18n[lang].blog_intro }}"
+---
+{% include "views/blog.njk" %}

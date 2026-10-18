@@ -1,0 +1,5 @@
+{#- Structured data (JSON-LD), built in eleventy.config.js (filter "jsonld"). -#}
+{%- set ld = pageType | jsonld -%}
+{%- if ld %}
+<script type="application/ld+json">{{ ld | safe }}</script>
+{%- endif %}

@@ -1,0 +1,62 @@
+{%- from "partials/macros.njk" import cta -%}
+{%- set L = i18n[lang] -%}
+{%- set canonical = page.url | abs(site.url) -%}
+{%- set waHref = "https://wa.me/" + site.phone + "?text=" + ((site.wa_intro + " " + title + "\n" + canonical) | encode) -%}
+<div class="wrap layout"><div class="main"><article class="article" data-pagefind-body>
+<nav aria-label="{{ L.breadcrumb }}" class="breadcrumb" data-pagefind-ignore><ol><li><a href="/en/">{{ L.home }}</a></li><li><span aria-current="page">{{ title }}</span></li></ol></nav>
+<header class="article-head"><h1>{{ title }}</h1></header>
+<div class="post-body">
+<p class="hub-intro">Simple calculators that help you estimate the numbers before any property decision. The results are estimates and depend on the figures you enter.</p>
+<section class="calc" id="installment"><h2>How do you calculate a unit installment?</h2>
+<form data-calc="installment">
+<div class="calc-grid">
+<div><label for="i-price">Unit price (EGP)</label><input class="field" id="i-price" inputmode="decimal" name="price" placeholder="Example: 3000000"></div>
+<div><label for="i-dp">Down payment (%)</label><input class="field" id="i-dp" inputmode="decimal" name="dp" placeholder="Example: 10"></div>
+<div><label for="i-years">Installment period (years)</label><input class="field" id="i-years" inputmode="decimal" name="years" placeholder="Example: 8"></div>
+<div><label for="i-per">Installment frequency</label><select class="field" id="i-per" name="per"><option value="12">Monthly</option><option value="4">Quarterly</option><option value="2">Semi-annual</option><option value="1">Annual</option></select></div>
+</div>
+<dl aria-live="polite" class="calc-out">
+<div><dt>Down payment</dt><dd data-out="down"></dd></div>
+<div><dt>Remaining amount</dt><dd data-out="rest"></dd></div>
+<div><dt>Installment amount</dt><dd data-out="inst"></dd></div>
+<div><dt>Number of installments</dt><dd data-out="count"></dd></div>
+</dl>
+</form>
+<p>How it is calculated: the down payment equals the unit price multiplied by the down payment rate; each installment equals the remaining amount divided by the number of installments.</p>
+<p class="calc-note">The calculation assumes an interest-free plan with equal installments; some payment plans include a payment on handover or unequal installments.</p>
+</section>
+<section class="calc" id="mortgage"><h2>How do you calculate a mortgage installment?</h2>
+<form data-calc="mortgage">
+<div class="calc-grid">
+<div><label for="m-loan">Loan amount (EGP)</label><input class="field" id="m-loan" inputmode="decimal" name="loan" placeholder="Example: 2000000"></div>
+<div><label for="m-rate">Annual interest rate (%)</label><input class="field" id="m-rate" inputmode="decimal" name="rate" placeholder="Enter the rate the bank offered you"></div>
+<div><label for="m-years">Loan term (years)</label><input class="field" id="m-years" inputmode="decimal" name="years" placeholder="Example: 15"></div>
+</div>
+<dl aria-live="polite" class="calc-out">
+<div><dt>Monthly installment</dt><dd data-out="monthly"></dd></div>
+<div><dt>Total paid</dt><dd data-out="total"></dd></div>
+<div><dt>Total interest</dt><dd data-out="interest"></dd></div>
+</dl>
+</form>
+<p>How it is calculated: the calculator uses the standard fixed-installment loan formula, with monthly declining-balance interest.</p>
+<p class="calc-note">Use the interest rate the bank actually offers you; the result does not include administrative fees or insurance.</p>
+</section>
+<section class="calc" id="yield"><h2>How do you calculate rental yield?</h2>
+<form data-calc="yield">
+<div class="calc-grid">
+<div><label for="y-price">Unit price (EGP)</label><input class="field" id="y-price" inputmode="decimal" name="price" placeholder="Example: 3000000"></div>
+<div><label for="y-rent">Monthly rent (EGP)</label><input class="field" id="y-rent" inputmode="decimal" name="rent" placeholder="Example: 20000"></div>
+<div><label for="y-cost">Annual costs (EGP)</label><input class="field" id="y-cost" inputmode="decimal" name="cost" placeholder="Maintenance, taxes, and other costs"></div>
+</div>
+<dl aria-live="polite" class="calc-out">
+<div><dt>Gross yield</dt><dd data-out="gross"></dd></div>
+<div><dt>Net yield</dt><dd data-out="net"></dd></div>
+<div><dt>Payback years</dt><dd data-out="payback"></dd></div>
+</dl>
+</form>
+<p>How it is calculated: gross yield equals the annual rent divided by the unit price; net yield first subtracts the annual costs from the rent.</p>
+<p class="calc-note">The result does not account for periods when the unit is vacant, or for changes in the unit's price over time.</p>
+</section>
+</div>
+{{ cta(L.cta_default, "page-cta", waHref, "tel:+" + site.phone, L) }}
+</article></div></div>

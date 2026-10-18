@@ -1,0 +1,19 @@
+{
+  "items": [
+    {
+      "id": "installment",
+      "name": "Installment calculator",
+      "desc": "The down payment, each installment, and how many there are."
+    },
+    {
+      "id": "mortgage",
+      "name": "Mortgage calculator",
+      "desc": "The monthly installment and the total interest."
+    },
+    {
+      "id": "yield",
+      "name": "Rental yield calculator",
+      "desc": "Gross and net yield, and the payback period."
+    }
+  ]
+}

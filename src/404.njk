@@ -1,0 +1,11 @@
+---
+permalink: /404.html
+layout: base.njk
+bodyClass: is-error no-sidebar
+pageType: error
+robots: noindex, follow
+eleventyExcludeFromCollections: true
+eleventyComputed:
+  title: "{{ i18n[lang].nf_title }}"
+---
+{% include "views/404.njk" %}

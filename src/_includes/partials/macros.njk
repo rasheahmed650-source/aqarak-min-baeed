@@ -1,0 +1,19 @@
+{%- from "partials/icons.njk" import icon -%}
+{%- macro cta(title, place, waHref, telHref, L) -%}
+<aside aria-label="{{ L.contact_aria }}" class="cta-box"><span aria-hidden="true" class="sec-icon">{{ icon("CHAT") }}</span>
+<div><p class="cta-title">{{ title }}</p><p class="cta-text">{{ L.cta_text }}</p></div>
+<div class="cta-actions"><a class="btn btn-wa" data-place="{{ place }}" data-wa="1" href="{{ waHref }}" rel="noopener" target="_blank">{{ icon("WA") }}{{ L.whatsapp }}</a><a class="btn btn-call" data-call="1" data-place="{{ place }}" href="{{ telHref }}">{{ icon("PHONE") }}{{ L.call }}</a></div></aside>
+{%- endmacro -%}
+{%- macro card(post, sec, lang, h="h3") -%}
+<article class="p-card"><a aria-hidden="true" class="p-media" href="{{ post.url }}" tabindex="-1">
+{%- if post.data.image %}<img alt="" src="{{ post.data.image }}" width="640" height="400">{% else %}{{ icon("PH", "ph-icon") }}{% endif -%}
+<span class="p-badge">{{ sec.name }}</span></a>
+<div class="p-body"><{{ h }} class="p-title"><a href="{{ post.url }}">{{ post.data.title }}</a></{{ h }}><p class="p-text">{{ post.data.description }}</p><p class="p-date"><time datetime="{{ post.data.date | isoDate }}">{{ post.data.date | ldate(lang) }}</time></p></div></article>
+{%- endmacro -%}
+{#- Category chips shown on the blog and on every category page, so both lead to the same places. -#}
+{%- macro catnav(sections, current, lang, L, counts) -%}
+<nav aria-label="{{ L.blog_cats }}" class="cat-nav"><ul>
+<li><a href="{{ '/blog/' | lpath(lang) }}"{% if current == "blog" %} aria-current="page"{% endif %}>{{ L.all_cats }}</a></li>
+{%- for s in sections.items %}<li><a href="{{ ('/' + s.slug + '/') | lpath(lang) }}"{% if current == s.slug %} aria-current="page"{% endif %}>{{ s.name }}{% if counts and counts[s.slug] %} <span class="cat-count">{{ counts[s.slug] }}</span>{% endif %}</a></li>{% endfor %}
+</ul></nav>
+{%- endmacro -%}
