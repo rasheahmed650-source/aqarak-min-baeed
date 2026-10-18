@@ -1,0 +1,18 @@
+{
+  "name": "aqarak-min-baeed",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "eleventy && pagefind --site _site",
+    "start": "eleventy --serve",
+    "translate": "node scripts/translate.mjs"
+  },
+  "dependencies": {
+    "@11ty/eleventy": "3.1.6",
+    "@11ty/eleventy-img": "6.0.4",
+    "pagefind": "1.5.2"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

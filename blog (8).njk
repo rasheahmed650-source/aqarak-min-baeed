@@ -1,0 +1,16 @@
+{%- from "partials/macros.njk" import cta, card, catnav -%}
+{%- set L = i18n[lang] -%}
+{%- set canonical = page.url | abs(site.url) -%}
+{%- set waHref = "https://wa.me/" + site.phone + "?text=" + ((site.wa_intro + " " + h1 + "\n" + canonical) | encode) -%}
+{%- set counts = {} -%}
+{%- for sp in collections | coll("sectionPages", lang) %}{% if sp.page == 1 %}{% set _c = counts | setKey(sp.section.slug, sp.count) %}{% endif %}{% endfor -%}
+<div class="wrap layout"><div class="main">
+<nav aria-label="{{ L.breadcrumb }}" class="breadcrumb"><ol><li><a href="{{ '/' | lpath(lang) }}">{{ L.home }}</a></li><li><span aria-current="page">{{ L.blog }}</span></li></ol></nav>
+<header class="list-head"><h1>{{ L.blog_h1 }}</h1><p>{{ L.blog_intro }}</p></header>
+{{ catnav(sections, "blog", lang, L, counts) }}
+<ul class="card-list">{% for p in list %}<li>{{ card(p, p.data.section | sectionOf(sections), lang, "h2") }}</li>{% endfor %}</ul>
+{%- if pagination.href.previous or pagination.href.next %}
+<nav aria-label="{{ L.pager }}" class="pager">{% if pagination.href.previous %}<a href="{{ pagination.href.previous }}" rel="prev">{{ L.newer }}</a>{% endif %}{% if pagination.href.next %}<a class="older" href="{{ pagination.href.next }}" rel="next">{{ L.older }}</a>{% endif %}</nav>
+{%- endif %}
+{{ cta(L.cta_default, "list-cta", waHref, "tel:+" + site.phone, L) }}
+</div></div>

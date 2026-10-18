@@ -1,0 +1,27 @@
+{
+  "key": "aqarak",
+  "name_en": "Aqarak Min Baeed",
+  "theme_color": "#1E1A3C",
+  "logo": {
+    "ar": [
+      846,
+      116
+    ],
+    "ar-dark": [
+      846,
+      116
+    ],
+    "en": [
+      613,
+      120
+    ],
+    "en-dark": [
+      613,
+      120
+    ]
+  },
+  "preload": [
+    "ibm-plex-sans-arabic-arabic-400-normal.woff2",
+    "kufam-arabic-700-normal.woff2"
+  ]
+}

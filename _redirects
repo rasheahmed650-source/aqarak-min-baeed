@@ -1,0 +1,3 @@
+# The article list moved from /latest/ to /blog/.
+/latest/ /blog/ 301
+/latest/page/:n/ /blog/page/:n/ 301

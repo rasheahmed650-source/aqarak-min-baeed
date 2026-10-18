@@ -1,0 +1,64 @@
+{
+  "items": [
+    {
+      "name": "Buying from Abroad",
+      "slug": "buying-abroad",
+      "nav": "Buying",
+      "description": "The steps of buying while outside Egypt, and viewing a unit remotely.",
+      "intro": "The steps of buying while outside Egypt, and viewing a unit remotely.",
+      "cta": "Do you want a buying plan that fits living outside Egypt?",
+      "icon": "KEY",
+      "in_menu": true
+    },
+    {
+      "name": "Power of Attorney and Documents",
+      "slug": "poa",
+      "nav": "Documents",
+      "description": "The official power of attorney, and the documents you need before and after signing.",
+      "intro": "The official power of attorney, and the documents you need before and after signing.",
+      "cta": "Do you need the power of attorney steps explained before you sign?",
+      "icon": "DOC",
+      "in_menu": true
+    },
+    {
+      "name": "Payments and Transfers",
+      "slug": "payments",
+      "nav": "Payments",
+      "description": "Paying from abroad, transferring money, and installment plans for Egyptians abroad.",
+      "intro": "Paying from abroad, transferring money, and installment plans for Egyptians abroad.",
+      "cta": "Do you want to know the best way to pay from abroad?",
+      "icon": "COINS",
+      "in_menu": true
+    },
+    {
+      "name": "Investing from Abroad",
+      "slug": "investing",
+      "nav": "Investing",
+      "description": "Renting out and managing your unit while you are away, and calculating the return.",
+      "intro": "Renting out and managing your unit while you are away, and calculating the return.",
+      "cta": "Do you want your return calculation reviewed before you decide?",
+      "icon": "CHART",
+      "in_menu": true
+    },
+    {
+      "name": "Choosing a Unit",
+      "slug": "choosing",
+      "nav": "Units",
+      "description": "How to choose a unit that suits your return or your family in Egypt.",
+      "intro": "How to choose a unit that suits your return or your family in Egypt.",
+      "cta": "Not sure which unit suits your family?",
+      "icon": "HOMES",
+      "in_menu": true
+    },
+    {
+      "name": "General Articles",
+      "slug": "articles",
+      "nav": "General Articles",
+      "description": "Articles and advice for Egyptians abroad that do not belong to one category.",
+      "intro": "Articles and advice for Egyptians abroad that do not belong to one category.",
+      "cta": "Do you have a real estate question?",
+      "icon": "DOC",
+      "in_menu": false
+    }
+  ]
+}

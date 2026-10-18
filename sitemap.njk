@@ -1,0 +1,25 @@
+---
+permalink: /sitemap.xml
+eleventyExcludeFromCollections: true
+---
+{%- macro u(path, lastmod, lang, collections, site) -%}
+{%- set alt = path | altUrl(lang, collections) %}
+<url><loc>{{ path | abs(site.url) }}</loc>{% if lastmod %}<lastmod>{{ lastmod | isoDate }}</lastmod>{% endif %}
+{%- if alt %}{% set arP = path if lang == "ar" else alt %}{% set enP = alt if lang == "ar" else path -%}
+<xhtml:link rel="alternate" hreflang="ar" href="{{ arP | abs(site.url) }}"/><xhtml:link rel="alternate" hreflang="en" href="{{ enP | abs(site.url) }}"/><xhtml:link rel="alternate" hreflang="x-default" href="{{ arP | abs(site.url) }}"/>{% endif %}</url>
+{%- endmacro -%}
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+{%- for lang in ["ar", "en"] %}
+{%- set posts = collections | coll("posts", lang) %}
+{{ u("/" | lpath(lang), (posts[0].data.updated or posts[0].data.date) if posts.length else null, lang, collections, site) }}
+{{ u("/blog/" | lpath(lang), (posts[0].data.updated or posts[0].data.date) if posts.length else null, lang, collections, site) }}
+{%- for sp in collections | coll("sectionPages", lang) %}{% if sp.page == 1 %}
+{{ u(sp.url, (sp.posts[0].data.updated or sp.posts[0].data.date) if sp.posts.length else null, lang, collections, site) }}{% endif %}{% endfor %}
+{{ u("/tools/" | lpath(lang), null, lang, collections, site) }}
+{%- for p in collections | coll("pagesLive", lang) %}
+{{ u(p.url, null, lang, collections, site) }}{% endfor %}
+{%- for p in posts %}
+{{ u(p.url, p.data.updated or p.data.date, lang, collections, site) }}{% endfor %}
+{%- endfor %}
+</urlset>

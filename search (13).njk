@@ -1,0 +1,10 @@
+---
+permalink: /search/
+layout: base.njk
+bodyClass: is-page no-sidebar
+pageType: search
+robots: noindex, follow
+eleventyComputed:
+  title: "{{ i18n[lang].search_title }}"
+---
+{% include "views/search.njk" %}

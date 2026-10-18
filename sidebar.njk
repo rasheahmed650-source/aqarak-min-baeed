@@ -1,0 +1,6 @@
+<aside aria-label="{{ L.sidebar }}" class="sidebar"><div class="sidebar-inner"><div class="sidebar-section">
+<div class="widget"><h2>{{ L.guide_sections }}</h2><ul>{% for s in sections.items %}<li><a href="{{ ('/' + s.slug + '/') | lpath(lang) }}">{{ s.name }}</a></li>{% endfor %}</ul></div>
+{%- set latestSide = collections | coll("posts", lang) | except(page.url) | take(5) %}
+{%- if latestSide.length %}<div class="widget"><h2>{{ L.latest }}</h2><ul>{% for p in latestSide %}<li><a href="{{ p.url }}">{{ p.data.title }}</a></li>{% endfor %}</ul></div>{% endif %}
+<div class="widget"><h2>{{ L.tools }}</h2><ul>{% for t in tools.items %}<li><a href="{{ '/tools/' | lpath(lang) }}#{{ t.id }}">{{ t.name }}</a></li>{% endfor %}</ul></div>
+</div></div></aside>

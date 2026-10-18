@@ -1,0 +1,14 @@
+{%- set livePages = collections | coll("pagesLive", lang) -%}
+<footer class="site-footer"><div class="wrap"><div class="footer-cols">
+<div class="footer-col">{%- set dk = lang + "-dark" -%}<p class="footer-brand"><img eleventy:ignore class="footer-logo" src="/assets/img/logo-{{ dk }}.svg" alt="{{ site.name }}" width="{{ brand.logo[dk][0] }}" height="{{ brand.logo[dk][1] }}" loading="lazy"></p>
+<p>{{ site.about }}</p>
+<p class="footer-contact"><span>{{ L.contact_label }}</span><a aria-label="{{ L.wa_aria }}" class="fc-btn fc-wa" data-place="footer" data-wa="1" href="{{ waHref }}" rel="noopener" target="_blank">{{ icon("WA") }}</a><a aria-label="{{ L.call_aria }}" class="fc-btn" data-call="1" data-place="footer" href="{{ telHref }}">{{ icon("PHONE") }}</a></p>
+{%- set socials = site.social | socialLinks -%}
+{%- if socials.length %}
+<p class="footer-social"><span>{{ L.follow }}</span>{% for x in socials %}<a href="{{ x.href }}"{% if x.key != "email" %} rel="noopener me" target="_blank"{% endif %}>{{ L.social[x.key] }}</a>{% endfor %}</p>
+{%- endif %}</div>
+<div class="footer-col"><h2>{{ L.footer_sections }}</h2><ul>{% for s in sections.items %}<li><a href="{{ ('/' + s.slug + '/') | lpath(lang) }}">{{ s.name }}</a></li>{% endfor %}</ul></div>
+<div class="footer-col"><h2>{{ L.footer_tools }}</h2><ul>{% for t in tools.items %}<li><a href="{{ '/tools/' | lpath(lang) }}#{{ t.id }}">{{ t.name }}</a></li>{% endfor %}<li><a href="{{ '/blog/' | lpath(lang) }}">{{ L.blog }}</a></li></ul></div>
+<div class="footer-col"><h2>{{ L.footer_about }}</h2><ul>{% for p in livePages %}<li><a href="{{ p.url }}">{{ p.data.title }}</a></li>{% endfor %}<li><a href="{{ alt or ('/' | lpath(L.other)) }}" hreflang="{{ L.other }}" lang="{{ L.other }}">{{ L.other_label }}</a></li></ul></div>
+</div><p class="copyright">© {{ build.year }} {{ site.name }}</p></div></footer>
+<div aria-label="{{ L.quick_contact }}" class="fab" role="group"><a aria-label="{{ L.wa_aria }}" class="fab-wa" data-place="floating" data-wa="1" href="{{ waHref }}" rel="noopener" target="_blank">{{ icon("WA") }}<span aria-hidden="true" class="fab-tip">{{ L.whatsapp }}</span></a><a aria-label="{{ L.call_aria }}" class="fab-call" data-call="1" data-place="floating" href="{{ telHref }}">{{ icon("PHONE") }}<span aria-hidden="true" class="fab-tip">{{ L.call_tip }}</span></a></div>

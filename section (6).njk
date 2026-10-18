@@ -1,0 +1,19 @@
+{%- from "partials/macros.njk" import cta, card, catnav -%}
+{%- from "partials/icons.njk" import icon -%}
+{%- set L = i18n[lang] -%}
+{%- set canonical = page.url | abs(site.url) -%}
+{%- set waHref = "https://wa.me/" + site.phone + "?text=" + ((site.wa_intro + " " + sp.section.name + "\n" + canonical) | encode) -%}
+<div class="wrap layout"><div class="main">
+<nav aria-label="{{ L.breadcrumb }}" class="breadcrumb"><ol><li><a href="{{ '/' | lpath(lang) }}">{{ L.home }}</a></li><li><a href="{{ '/blog/' | lpath(lang) }}">{{ L.blog }}</a></li><li><span aria-current="page">{{ sp.section.name }}</span></li></ol></nav>
+<header class="list-head"><h1>{{ sp.section.name }}</h1>{% if sp.page == 1 and sp.section.intro %}<p class="hub-intro">{{ sp.section.intro }}</p>{% else %}<p>{{ sp.section.description }}</p>{% endif %}</header>
+{{ catnav(sections, sp.section.slug, lang, L) }}
+{%- if sp.posts.length %}
+<ul class="card-list">{% for p in sp.posts %}<li>{{ card(p, sp.section, lang, "h2") }}</li>{% endfor %}</ul>
+{%- else %}
+<p class="empty-state">{{ L.empty_a }} {{ sp.section.name }}{{ L.empty_b }}</p>
+{%- endif %}
+{%- if sp.prev or sp.next %}
+<nav aria-label="{{ L.pager }}" class="pager">{% if sp.prev %}<a href="{{ sp.prev }}" rel="prev">{{ L.newer }}</a>{% endif %}{% if sp.next %}<a class="older" href="{{ sp.next }}" rel="next">{{ L.older }}</a>{% endif %}</nav>
+{%- endif %}
+{{ cta(sp.section.cta or L.cta_default, "list-cta", waHref, "tel:+" + site.phone, L) }}
+</div></div>

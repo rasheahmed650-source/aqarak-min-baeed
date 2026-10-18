@@ -1,0 +1,24 @@
+---
+permalink: /llms.txt
+eleventyExcludeFromCollections: true
+---
+# {{ site.name }}
+
+> {{ site.description }}
+
+{{ site.about }}
+
+## الأقسام
+{% for s in sections.items %}
+- [{{ s.name }}]({{ ("/" + s.slug + "/") | abs(site.url) }}): {{ s.description }}{% endfor %}
+- [أدوات وحاسبات عقارية]({{ "/tools/" | abs(site.url) }}): حاسبات القسط والتمويل والعائد مع شرح طريقة الحساب.
+
+## أحدث المقالات
+{% for p in collections.posts | take(50) %}
+- [{{ p.data.title }}]({{ p.url | abs(site.url) }}): {{ p.data.description }}{% endfor %}
+
+## English
+{% for s in sections_en.items %}
+- [{{ s.name }}]({{ ("/en/" + s.slug + "/") | abs(site.url) }}): {{ s.description }}{% endfor %}
+{% for p in collections.posts_en | take(50) %}
+- [{{ p.data.title }}]({{ p.url | abs(site.url) }}): {{ p.data.description }}{% endfor %}

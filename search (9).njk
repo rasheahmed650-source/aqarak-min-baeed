@@ -1,0 +1,15 @@
+{%- set L = i18n[lang] -%}
+<div class="wrap layout"><div class="main">
+<header class="list-head"><h1>{{ L.search_title }}</h1><p>{{ L.search_intro }}</p></header>
+<div id="search" class="site-search"></div>
+<noscript><p class="empty-state">{{ L.search_noscript }} <a href="{{ '/blog/' | lpath(lang) }}">{{ L.blog }}</a>.</p></noscript>
+</div></div>
+<link rel="stylesheet" href="/pagefind/pagefind-ui.css">
+<script src="/pagefind/pagefind-ui.js"></script>
+<script>
+window.addEventListener('DOMContentLoaded',function(){
+  if(!window.PagefindUI)return;
+  var ui=new PagefindUI({element:'#search',showSubResults:false,showImages:false,resetStyles:false,translations:{{ L.pf | json | safe }}});
+  var q=new URLSearchParams(location.search).get('q');if(q)ui.triggerSearch(q);
+});
+</script>

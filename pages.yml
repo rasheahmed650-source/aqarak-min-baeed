@@ -1,0 +1,640 @@
+# Pages CMS configuration: this is what appears in the editing dashboard (app.pagescms.org).
+media:
+  input: src/media
+  output: /media
+  categories: [image]
+  rename: safe
+
+content:
+  - name: posts
+    label: المقالات
+    type: collection
+    path: src/posts
+    filename: "{fields.slug}.md"
+    exclude: [posts.11tydata.js]
+    view:
+      fields: [title, section, date, draft]
+      primary: title
+      sort: [date, title]
+      default:
+        sort: date
+        order: desc
+    fields:
+      - name: title
+        label: عنوان المقال (H1)
+        type: string
+        required: true
+        description: يبدأ بالكلمة المفتاحية، وهو نفسه الذي يظهر في رسالة واتساب.
+      - name: slug
+        label: رابط المقال بالإنجليزية
+        type: string
+        required: true
+        description: "من 2 إلى 5 كلمات إنجليزية صغيرة بينها شرطة، مثل compare-installment-plans. لا تغيّره بعد النشر."
+        pattern:
+          regex: "^(?!(buying-abroad|poa|payments|investing|choosing|articles|tools|search|blog|latest|en|about|editorial-policy|contact|privacy|page|media|assets|pagefind|img|feed|sitemap|robots|llms|404)$)[a-z0-9]+(-[a-z0-9]+)*$"
+          message: "حروف إنجليزية صغيرة وأرقام وشرطات فقط، وليس اسم قسم أو صفحة موجودة."
+      - name: description
+        label: وصف البحث
+        type: text
+        required: true
+        description: جملة واحدة في حدود 150 حرفًا تلخص المقال؛ تظهر في جوجل وعلى بطاقة المقال.
+        options:
+          maxlength: 170
+      - name: section
+        label: القسم
+        type: select
+        required: true
+        options:
+          values:
+            - value: buying-abroad
+              label: الشراء من الخارج
+            - value: poa
+              label: التوكيل والأوراق
+            - value: payments
+              label: الدفع والتحويل
+            - value: investing
+              label: الاستثمار من بعيد
+            - value: choosing
+              label: اختيار الوحدة
+            - value: articles
+              label: مقالات عامة
+      - name: date
+        label: تاريخ النشر
+        type: date
+        required: true
+      - name: updated
+        label: تاريخ آخر تحديث
+        type: date
+        description: غيّره عند كل تحديث حقيقي للمقال.
+      - name: author
+        label: اسم الكاتب
+        type: string
+        description: اتركه فارغًا ليظهر الاسم الافتراضي من إعدادات الموقع.
+      - name: reviewer
+        label: اسم المراجع وصفته
+        type: string
+        description: اتركه فارغًا لو لم يراجع المقال شخص حقيقي.
+      - name: reviewer_url
+        label: رابط صفحة المراجع
+        type: string
+      - name: image
+        label: صورة المقال
+        type: image
+        description: عرض 1200 بكسل يكفي. تظهر أعلى المقال وعلى بطاقته.
+      - name: image_alt
+        label: وصف الصورة (alt)
+        type: string
+        description: وصف دقيق لما في الصورة، بلا حشو كلمات.
+      - name: image_caption
+        label: تعليق تحت الصورة
+        type: string
+        description: لو الصورة غير حقيقية اكتب «صورة توضيحية»، أو اكتب مصدرها وتاريخها.
+      - name: answer
+        label: الإجابة المباشرة
+        type: text
+        required: true
+        description: جملتان أو ثلاث تجيب عن سؤال العنوان مباشرة، بلا مقدمة.
+      - name: body
+        label: نص المقال
+        type: rich-text
+        required: true
+        description: العناوين الرئيسية من نوع Heading 2، والفرعية Heading 3. جدول المحتويات يُبنى تلقائيًا.
+      - name: pros
+        label: المزايا
+        type: string
+        list: true
+      - name: cons
+        label: القيود
+        type: string
+        list: true
+      - name: actions
+        label: ماذا تفعل الآن؟ (خطوات)
+        type: string
+        list: true
+      - name: faq
+        label: أسئلة شائعة
+        type: object
+        list: true
+        fields:
+          - name: q
+            label: السؤال
+            type: string
+          - name: a
+            label: الإجابة
+            type: text
+      - name: sources
+        label: المصادر
+        type: object
+        list: true
+        description: إلزامي عند ذكر أي رقم أو نسبة أو إجراء رسمي.
+        fields:
+          - name: name
+            label: اسم المصدر والوثيقة
+            type: string
+          - name: url
+            label: الرابط
+            type: string
+          - name: date
+            label: تاريخ النشر أو الاطلاع
+            type: string
+      - name: next_title
+        label: الخطوة التالية (عنوان)
+        type: string
+      - name: next_url
+        label: الخطوة التالية (رابط)
+        type: string
+        description: رابط مقال منشور، مثل /compare-installment-plans/
+      - name: draft
+        label: مسودة (لا تُنشر)
+        type: boolean
+        default: true
+        description: اتركها مفعّلة حتى ينتهي المقال، ثم ألغِ التفعيل واحفظ لينشر.
+
+  - name: pages
+    label: صفحات الموقع
+    type: collection
+    path: src/pages
+    exclude: [pages.11tydata.js]
+    operations:
+      create: false
+      delete: false
+      rename: false
+    view:
+      fields: [title, draft]
+      primary: title
+    fields:
+      - name: title
+        label: عنوان الصفحة
+        type: string
+        required: true
+      - name: description
+        label: وصف البحث
+        type: text
+      - name: body
+        label: نص الصفحة
+        type: rich-text
+      - name: draft
+        label: مسودة (لا تُنشر)
+        type: boolean
+
+  - name: sections
+    label: الأقسام
+    type: file
+    path: src/_data/sections.json
+    format: json
+    fields:
+      - name: items
+        label: الأقسام
+        type: object
+        list: true
+        fields:
+          - name: name
+            label: اسم القسم
+            type: string
+            required: true
+          - name: slug
+            label: رابط القسم بالإنجليزية
+            type: string
+            required: true
+            description: لا تغيّره بعد النشر. القسم الجديد يحتاج إضافته أيضًا لقائمة «القسم» في المقالات.
+          - name: nav
+            label: الاسم المختصر في القائمة
+            type: string
+          - name: description
+            label: وصف قصير
+            type: text
+          - name: intro
+            label: مقدمة صفحة القسم
+            type: text
+          - name: cta
+            label: عنوان صندوق التواصل في مقالات القسم
+            type: string
+          - name: icon
+            label: الأيقونة
+            type: select
+            options:
+              values: [KEY, COINS, CHART, HOMES, TAG, DOC, CALC]
+          - name: in_menu
+            label: يظهر في القائمة والبطاقات
+            type: boolean
+
+  - name: home
+    label: الصفحة الرئيسية
+    type: file
+    path: src/_data/home.json
+    format: json
+    fields:
+      - name: kicker
+        label: السطر الصغير فوق العنوان
+        type: string
+      - name: h1
+        label: العنوان الرئيسي H1
+        type: string
+        required: true
+        description: يبدأ بالكلمة المفتاحية الرئيسية للموقع.
+      - name: lead
+        label: الجملة تحت العنوان
+        type: text
+      - name: search_placeholder
+        label: نص مربع البحث
+        type: string
+      - name: sections_h2
+        label: عنوان قسم البطاقات
+        type: string
+      - name: sections_p
+        label: سطر تحت عنوان البطاقات
+        type: string
+      - name: latest_h2
+        label: عنوان أحدث المقالات
+        type: string
+      - name: latest_p
+        label: سطر تحت أحدث المقالات
+        type: string
+      - name: tools_h2
+        label: عنوان قسم الأدوات
+        type: string
+      - name: tools_p
+        label: سطر تحت عنوان الأدوات
+        type: string
+
+  - name: site
+    label: إعدادات الموقع
+    type: file
+    path: src/_data/site.json
+    format: json
+    fields:
+      - name: name
+        label: اسم الموقع
+        type: string
+        required: true
+      - name: tagline
+        label: الشعار المختصر (يظهر في عنوان الرئيسية)
+        type: string
+      - name: description
+        label: وصف الموقع لجوجل
+        type: text
+        required: true
+      - name: about
+        label: جملة التعريف في الفوتر
+        type: text
+      - name: url
+        label: عنوان الموقع الكامل
+        type: string
+        required: true
+        description: "مثل https://aqarak-min-baeed.pages.dev بدون شرطة مائلة في الآخر."
+        pattern:
+          regex: "^https://[a-z0-9.-]+[a-z]$"
+          message: يبدأ بـ https:// وبدون / في الآخر.
+      - name: phone
+        label: رقم واتساب والاتصال (أرقام فقط بالكود الدولي)
+        type: string
+        required: true
+        pattern:
+          regex: "^[1-9][0-9]{9,14}$"
+          message: "أرقام فقط بدون + أو مسافات، مثل 201100992905"
+      - name: wa_intro
+        label: أول رسالة واتساب
+        type: string
+        required: true
+      - name: default_author
+        label: اسم الكاتب الافتراضي
+        type: string
+      - name: author_note
+        label: جملة صندوق الكاتب
+        type: text
+      - name: google_verification
+        label: رمز التحقق من Google Search Console
+        type: string
+        description: الصق قيمة content فقط من علامة HTML التي يعطيها Search Console.
+      - name: bing_verification
+        label: رمز التحقق من Bing Webmaster Tools
+        type: string
+        description: الصق قيمة content فقط من علامة msvalidate.01.
+      - name: social
+        label: حسابات التواصل الاجتماعي (تظهر في الفوتر عند ملئها فقط)
+        type: object
+        fields:
+          - name: facebook
+            label: رابط فيسبوك
+            type: string
+          - name: instagram
+            label: رابط إنستجرام
+            type: string
+          - name: x
+            label: رابط إكس
+            type: string
+          - name: youtube
+            label: رابط يوتيوب
+            type: string
+          - name: tiktok
+            label: رابط تيك توك
+            type: string
+          - name: linkedin
+            label: رابط لينكدإن
+            type: string
+          - name: telegram
+            label: رابط تيليجرام
+            type: string
+          - name: email
+            label: البريد الإلكتروني
+            type: string
+
+  - name: posts_en
+    label: English articles (auto-translated)
+    type: collection
+    path: src/en/posts
+    filename: "{fields.slug}.md"
+    operations:
+      create: false
+    exclude: [posts.11tydata.js]
+    view:
+      fields: [title, section, date, draft]
+      primary: title
+      sort: [date, title]
+      default:
+        sort: date
+        order: desc
+    fields:
+      - name: title
+        label: عنوان المقال (H1)
+        type: string
+        required: true
+        description: يبدأ بالكلمة المفتاحية، وهو نفسه الذي يظهر في رسالة واتساب.
+      - name: slug
+        label: رابط المقال بالإنجليزية
+        type: string
+        required: true
+        description: "من 2 إلى 5 كلمات إنجليزية صغيرة بينها شرطة، مثل compare-installment-plans. لا تغيّره بعد النشر."
+        pattern:
+          regex: "^(?!(buying-abroad|poa|payments|investing|choosing|articles|tools|search|blog|latest|en|about|editorial-policy|contact|privacy|page|media|assets|pagefind|img|feed|sitemap|robots|llms|404)$)[a-z0-9]+(-[a-z0-9]+)*$"
+          message: "حروف إنجليزية صغيرة وأرقام وشرطات فقط، وليس اسم قسم أو صفحة موجودة."
+      - name: description
+        label: وصف البحث
+        type: text
+        required: true
+        description: جملة واحدة في حدود 150 حرفًا تلخص المقال؛ تظهر في جوجل وعلى بطاقة المقال.
+        options:
+          maxlength: 170
+      - name: section
+        label: القسم
+        type: select
+        required: true
+        options:
+          values:
+            - value: buying-abroad
+              label: الشراء من الخارج
+            - value: poa
+              label: التوكيل والأوراق
+            - value: payments
+              label: الدفع والتحويل
+            - value: investing
+              label: الاستثمار من بعيد
+            - value: choosing
+              label: اختيار الوحدة
+            - value: articles
+              label: مقالات عامة
+      - name: date
+        label: تاريخ النشر
+        type: date
+        required: true
+      - name: updated
+        label: تاريخ آخر تحديث
+        type: date
+        description: غيّره عند كل تحديث حقيقي للمقال.
+      - name: author
+        label: اسم الكاتب
+        type: string
+        description: اتركه فارغًا ليظهر الاسم الافتراضي من إعدادات الموقع.
+      - name: reviewer
+        label: اسم المراجع وصفته
+        type: string
+        description: اتركه فارغًا لو لم يراجع المقال شخص حقيقي.
+      - name: reviewer_url
+        label: رابط صفحة المراجع
+        type: string
+      - name: image
+        label: صورة المقال
+        type: image
+        description: عرض 1200 بكسل يكفي. تظهر أعلى المقال وعلى بطاقته.
+      - name: image_alt
+        label: وصف الصورة (alt)
+        type: string
+        description: وصف دقيق لما في الصورة، بلا حشو كلمات.
+      - name: image_caption
+        label: تعليق تحت الصورة
+        type: string
+        description: لو الصورة غير حقيقية اكتب «صورة توضيحية»، أو اكتب مصدرها وتاريخها.
+      - name: answer
+        label: الإجابة المباشرة
+        type: text
+        required: true
+        description: جملتان أو ثلاث تجيب عن سؤال العنوان مباشرة، بلا مقدمة.
+      - name: body
+        label: نص المقال
+        type: rich-text
+        required: true
+        description: العناوين الرئيسية من نوع Heading 2، والفرعية Heading 3. جدول المحتويات يُبنى تلقائيًا.
+      - name: pros
+        label: المزايا
+        type: string
+        list: true
+      - name: cons
+        label: القيود
+        type: string
+        list: true
+      - name: actions
+        label: ماذا تفعل الآن؟ (خطوات)
+        type: string
+        list: true
+      - name: faq
+        label: أسئلة شائعة
+        type: object
+        list: true
+        fields:
+          - name: q
+            label: السؤال
+            type: string
+          - name: a
+            label: الإجابة
+            type: text
+      - name: sources
+        label: المصادر
+        type: object
+        list: true
+        description: إلزامي عند ذكر أي رقم أو نسبة أو إجراء رسمي.
+        fields:
+          - name: name
+            label: اسم المصدر والوثيقة
+            type: string
+          - name: url
+            label: الرابط
+            type: string
+          - name: date
+            label: تاريخ النشر أو الاطلاع
+            type: string
+      - name: next_title
+        label: الخطوة التالية (عنوان)
+        type: string
+      - name: next_url
+        label: الخطوة التالية (رابط)
+        type: string
+        description: رابط مقال منشور، مثل /compare-installment-plans/
+      - name: draft
+        label: مسودة (لا تُنشر)
+        type: boolean
+        default: true
+        description: اتركها مفعّلة حتى ينتهي المقال، ثم ألغِ التفعيل واحفظ لينشر.
+
+      - name: translation_of
+        label: Arabic original (link)
+        type: string
+        description: Written by the translation workflow. Do not change.
+      - name: machine_translated
+        label: Machine translated
+        type: boolean
+
+  - name: pages_en
+    label: English site pages (auto-translated)
+    type: collection
+    path: src/en/pages
+    exclude: [pages.11tydata.js]
+    operations:
+      create: false
+      delete: false
+      rename: false
+    view:
+      fields: [title, draft]
+      primary: title
+    fields:
+      - name: title
+        label: عنوان الصفحة
+        type: string
+        required: true
+      - name: description
+        label: وصف البحث
+        type: text
+      - name: body
+        label: نص الصفحة
+        type: rich-text
+      - name: draft
+        label: مسودة (لا تُنشر)
+        type: boolean
+
+      - name: translation_of
+        label: Arabic original (link)
+        type: string
+        description: Written by the translation workflow. Do not change.
+      - name: machine_translated
+        label: Machine translated
+        type: boolean
+
+  - name: sections_en
+    label: English sections
+    type: file
+    path: src/_data/sections_en.json
+    format: json
+    fields:
+      - name: items
+        label: الأقسام
+        type: object
+        list: true
+        fields:
+          - name: name
+            label: اسم القسم
+            type: string
+            required: true
+          - name: slug
+            label: رابط القسم بالإنجليزية
+            type: string
+            required: true
+            description: لا تغيّره بعد النشر. القسم الجديد يحتاج إضافته أيضًا لقائمة «القسم» في المقالات.
+          - name: nav
+            label: الاسم المختصر في القائمة
+            type: string
+          - name: description
+            label: وصف قصير
+            type: text
+          - name: intro
+            label: مقدمة صفحة القسم
+            type: text
+          - name: cta
+            label: عنوان صندوق التواصل في مقالات القسم
+            type: string
+          - name: icon
+            label: الأيقونة
+            type: select
+            options:
+              values: [KEY, COINS, CHART, HOMES, TAG, DOC, CALC]
+          - name: in_menu
+            label: يظهر في القائمة والبطاقات
+            type: boolean
+
+
+  - name: home_en
+    label: English home page
+    type: file
+    path: src/_data/home_en.json
+    format: json
+    fields:
+      - name: kicker
+        label: السطر الصغير فوق العنوان
+        type: string
+      - name: h1
+        label: العنوان الرئيسي H1
+        type: string
+        required: true
+        description: يبدأ بالكلمة المفتاحية الرئيسية للموقع.
+      - name: lead
+        label: الجملة تحت العنوان
+        type: text
+      - name: search_placeholder
+        label: نص مربع البحث
+        type: string
+      - name: sections_h2
+        label: عنوان قسم البطاقات
+        type: string
+      - name: sections_p
+        label: سطر تحت عنوان البطاقات
+        type: string
+      - name: latest_h2
+        label: عنوان أحدث المقالات
+        type: string
+      - name: latest_p
+        label: سطر تحت أحدث المقالات
+        type: string
+      - name: tools_h2
+        label: عنوان قسم الأدوات
+        type: string
+      - name: tools_p
+        label: سطر تحت عنوان الأدوات
+        type: string
+
+
+  - name: site_en
+    label: English site settings
+    type: file
+    path: src/_data/site_en.json
+    format: json
+    fields:
+      - name: name
+        label: Site name in English
+        type: string
+        required: true
+      - name: tagline
+        label: Short tagline (home page title)
+        type: string
+      - name: description
+        label: Site description for Google
+        type: text
+      - name: about
+        label: Footer sentence
+        type: text
+      - name: wa_intro
+        label: First line of the WhatsApp message
+        type: string
+      - name: default_author
+        label: Default author name
+        type: string
+      - name: author_note
+        label: Author box sentence
+        type: text

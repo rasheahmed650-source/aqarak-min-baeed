@@ -1,0 +1,30 @@
+---
+layout: base.njk
+bodyClass: is-page no-sidebar
+pageType: page
+---
+{%- from "partials/macros.njk" import cta -%}
+{%- from "partials/icons.njk" import icon -%}
+{%- set L = i18n[lang] -%}
+{%- set canonical = page.url | abs(site.url) -%}
+{%- set waHref = "https://wa.me/" + site.phone + "?text=" + ((site.wa_intro + " " + title + "\n" + canonical) | encode) -%}
+<div class="wrap layout"><div class="main"><article class="article" data-pagefind-body>
+<nav aria-label="{{ L.breadcrumb }}" class="breadcrumb" data-pagefind-ignore><ol><li><a href="{{ '/' | lpath(lang) }}">{{ L.home }}</a></li><li><span aria-current="page">{{ title }}</span></li></ol></nav>
+<header class="article-head"><h1>{{ title }}</h1></header>
+<div class="post-body">{{ content | safe }}</div>
+{%- if page.fileSlug == "contact" %}
+<form class="contact-form" data-wa-form="1" data-l-name="{{ L.f_name }}" data-l-country="{{ L.f_country }}" data-l-topic="{{ L.f_topic }}" data-l-message="{{ L.f_message }}" novalidate data-pagefind-ignore>
+<h2>{{ L.form_title }}</h2>
+<div class="calc-grid">
+<div><label for="cf-name">{{ L.f_name }}</label><input class="field" id="cf-name" name="name" autocomplete="name"></div>
+<div><label for="cf-country">{{ L.f_country }}</label><input class="field" id="cf-country" name="country" autocomplete="country-name"></div>
+<div><label for="cf-topic">{{ L.f_topic }}</label><select class="field" id="cf-topic" name="topic"><option value="">{{ L.f_topic_any }}</option>{% for s in sections.items %}<option>{{ s.name }}</option>{% endfor %}</select></div>
+</div>
+<div class="cf-msg"><label for="cf-message">{{ L.f_message }}</label><textarea class="field" id="cf-message" name="message" rows="5" required></textarea></div>
+<p class="form-error" role="alert" hidden>{{ L.f_error }}</p>
+<button class="btn btn-wa" type="submit">{{ icon("WA") }}{{ L.f_send }}</button>
+<p class="calc-note">{{ L.f_note }}</p>
+</form>
+{%- endif %}
+{{ cta(L.cta_default, "page-cta", waHref, "tel:+" + site.phone, L) }}
+</article></div></div>

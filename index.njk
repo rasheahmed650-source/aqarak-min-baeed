@@ -1,0 +1,11 @@
+---
+permalink: /
+layout: base.njk
+bodyClass: is-home no-sidebar
+pageType: home
+isHome: true
+eleventyComputed:
+  h1: "{{ home.h1 }}"
+  description: "{{ site.description }}"
+---
+{% include "views/home.njk" %}

@@ -1,0 +1,14 @@
+<header class="site-header"><div class="wrap header-bar">
+<button aria-controls="site-nav" aria-expanded="false" aria-label="{{ L.menu_open }}" class="icon-btn menu-btn" id="menu-btn" type="button">{{ icon("MENU") }}</button>
+<div class="brand-section"><p class="brand"><a href="{{ '/' | lpath(lang) }}"><img eleventy:ignore class="brand-logo" src="/assets/img/logo-{{ lang }}.svg" alt="{{ site.name }}" width="{{ brand.logo[lang][0] }}" height="{{ brand.logo[lang][1] }}"></a></p></div>
+<div class="nav-wrap" id="site-nav"><div class="drawer-head"><span class="drawer-title">{{ L.drawer_title }}</span><button aria-label="{{ L.menu_close }}" class="icon-btn" id="nav-close" type="button">{{ icon("CLOSE") }}</button></div>
+<nav aria-label="{{ L.main_nav }}"><ul class="main-nav">
+{%- for s in sections.items %}{% if s.in_menu %}<li><a class="nav-link" href="{{ ('/' + s.slug + '/') | lpath(lang) }}">{{ s.nav or s.name }}</a></li>{% endif %}{% endfor -%}
+<li><a class="nav-link" href="{{ '/blog/' | lpath(lang) }}">{{ L.blog }}</a></li><li><a class="nav-link" href="{{ '/tools/' | lpath(lang) }}">{{ L.tools }}</a></li></ul></nav>
+<div class="nav-extra"><a class="btn btn-wa" data-place="drawer" data-wa="1" href="{{ waHref }}" rel="noopener" target="_blank">{{ icon("WA") }}{{ L.whatsapp }}</a><a class="btn btn-call" data-call="1" data-place="drawer" href="{{ telHref }}">{{ icon("PHONE") }}{{ L.call }}</a></div></div>
+<div class="header-actions"><a class="lang-switch" href="{{ alt or ('/' | lpath(L.other)) }}" hreflang="{{ L.other }}" lang="{{ L.other }}" aria-label="{{ L.other_aria }}">{{ L.other_label }}</a><button aria-controls="search-panel" aria-expanded="false" aria-label="{{ L.search_aria }}" class="icon-btn search-btn" id="search-btn" type="button">{{ icon("SEARCH") }}</button>
+<a class="btn btn-wa header-cta" data-place="header" data-wa="1" href="{{ waHref }}" rel="noopener" target="_blank">{{ icon("WA") }}{{ L.whatsapp }}</a></div>
+</div>
+<div class="search-panel" id="search-panel"><form action="{{ '/search/' | lpath(lang) }}" class="wrap search-line" method="get" role="search"><label class="sr-only" for="q-top">{{ L.search_site }}</label><input class="field" id="q-top" name="q" placeholder="{{ L.search_ph_top }}" type="search"><button class="btn btn-navy" type="submit">{{ L.search_btn }}</button></form></div>
+<button aria-hidden="true" class="nav-backdrop" id="nav-backdrop" tabindex="-1" type="button"><span class="sr-only">{{ L.menu_close }}</span></button>
+</header>

@@ -1,0 +1,17 @@
+---
+permalink: /robots.txt
+eleventyExcludeFromCollections: true
+---
+# Search engines and AI assistants may read every public page.
+# Internal search results are not useful in search results, so they are excluded.
+{% for b in crawlers.ai %}User-agent: {{ b }}
+{% endfor %}Disallow: /search/
+Disallow: /en/search/
+Allow: /
+
+User-agent: *
+Disallow: /search/
+Disallow: /en/search/
+Allow: /
+
+Sitemap: {{ "/sitemap.xml" | abs(site.url) }}

@@ -1,0 +1,15 @@
+---
+pagination:
+  data: collections.sectionPages
+  size: 1
+  alias: sp
+permalink: "{{ sp.url }}"
+layout: base.njk
+bodyClass: is-list no-sidebar
+pageType: section
+eleventyComputed:
+  title: "{{ sp.section.name }}{% if sp.page > 1 %} ({{ i18n[lang].page_n }} {{ sp.page }}){% endif %}"
+  h1: "{{ sp.section.name }}"
+  description: "{{ sp.section.description }}"
+---
+{% include "views/section.njk" %}

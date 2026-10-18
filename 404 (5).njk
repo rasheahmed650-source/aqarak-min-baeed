@@ -1,0 +1,6 @@
+{%- set L = i18n[lang] -%}
+<div class="wrap layout"><div class="main"><div class="error-box">
+<h1>{{ L.nf_title }}</h1><p>{{ L.nf_text }}</p>
+<form action="{{ '/search/' | lpath(lang) }}" class="search-line" method="get" role="search"><label class="sr-only" for="q-404">{{ L.search_site }}</label><input class="field" id="q-404" name="q" type="search" placeholder="{{ L.nf_ph }}"><button class="btn btn-navy" type="submit">{{ L.search_btn }}</button></form>
+<ul class="hub-list">{% for s in sections.items %}<li><a href="{{ ('/' + s.slug + '/') | lpath(lang) }}">{{ s.name }}<small>{{ s.description }}</small></a></li>{% endfor %}</ul>
+</div></div></div>

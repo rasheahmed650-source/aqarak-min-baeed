@@ -1,0 +1,62 @@
+{%- from "partials/macros.njk" import cta -%}
+{%- set L = i18n[lang] -%}
+{%- set canonical = page.url | abs(site.url) -%}
+{%- set waHref = "https://wa.me/" + site.phone + "?text=" + ((site.wa_intro + " " + title + "\n" + canonical) | encode) -%}
+<div class="wrap layout"><div class="main"><article class="article" data-pagefind-body>
+<nav aria-label="{{ L.breadcrumb }}" class="breadcrumb" data-pagefind-ignore><ol><li><a href="/">{{ L.home }}</a></li><li><span aria-current="page">{{ title }}</span></li></ol></nav>
+<header class="article-head"><h1>{{ title }}</h1></header>
+<div class="post-body">
+<p class="hub-intro">حاسبات بسيطة تساعدك على تقدير الأرقام قبل أي قرار عقاري. النتائج تقديرية، وتعتمد على الأرقام التي تدخلها أنت.</p>
+<section class="calc" id="installment"><h2>كيف تحسب قسط الوحدة؟</h2>
+<form data-calc="installment">
+<div class="calc-grid">
+<div><label for="i-price">سعر الوحدة بالجنيه</label><input class="field" id="i-price" inputmode="decimal" name="price" placeholder="مثال: 3000000"></div>
+<div><label for="i-dp">المقدم بالنسبة المئوية</label><input class="field" id="i-dp" inputmode="decimal" name="dp" placeholder="مثال: 10"></div>
+<div><label for="i-years">مدة التقسيط بالسنوات</label><input class="field" id="i-years" inputmode="decimal" name="years" placeholder="مثال: 8"></div>
+<div><label for="i-per">نظام الأقساط</label><select class="field" id="i-per" name="per"><option value="12">شهري</option><option value="4">ربع سنوي</option><option value="2">نصف سنوي</option><option value="1">سنوي</option></select></div>
+</div>
+<dl aria-live="polite" class="calc-out">
+<div><dt>قيمة المقدم</dt><dd data-out="down"></dd></div>
+<div><dt>المبلغ المتبقي</dt><dd data-out="rest"></dd></div>
+<div><dt>قيمة القسط</dt><dd data-out="inst"></dd></div>
+<div><dt>عدد الأقساط</dt><dd data-out="count"></dd></div>
+</dl>
+</form>
+<p>طريقة الحساب: المقدم يساوي سعر الوحدة مضروبًا في نسبة المقدم؛ والقسط يساوي المبلغ المتبقي مقسومًا على عدد الأقساط.</p>
+<p class="calc-note">الحساب لخطة بلا فوائد وبأقساط متساوية؛ بعض خطط السداد تتضمن دفعة عند الاستلام أو أقساطًا غير متساوية.</p>
+</section>
+<section class="calc" id="mortgage"><h2>كيف تحسب قسط التمويل العقاري؟</h2>
+<form data-calc="mortgage">
+<div class="calc-grid">
+<div><label for="m-loan">مبلغ التمويل بالجنيه</label><input class="field" id="m-loan" inputmode="decimal" name="loan" placeholder="مثال: 2000000"></div>
+<div><label for="m-rate">نسبة الفائدة السنوية</label><input class="field" id="m-rate" inputmode="decimal" name="rate" placeholder="اكتب النسبة التي عرضها البنك"></div>
+<div><label for="m-years">مدة التمويل بالسنوات</label><input class="field" id="m-years" inputmode="decimal" name="years" placeholder="مثال: 15"></div>
+</div>
+<dl aria-live="polite" class="calc-out">
+<div><dt>القسط الشهري</dt><dd data-out="monthly"></dd></div>
+<div><dt>إجمالي المدفوع</dt><dd data-out="total"></dd></div>
+<div><dt>إجمالي الفوائد</dt><dd data-out="interest"></dd></div>
+</dl>
+</form>
+<p>طريقة الحساب: الحاسبة تستخدم معادلة القسط الثابت المعتمدة في القروض، بفائدة متناقصة شهرية.</p>
+<p class="calc-note">استخدم نسبة الفائدة التي يعرضها البنك عليك فعليًا؛ والنتيجة لا تشمل المصاريف الإدارية أو التأمين.</p>
+</section>
+<section class="calc" id="yield"><h2>كيف تحسب العائد الإيجاري؟</h2>
+<form data-calc="yield">
+<div class="calc-grid">
+<div><label for="y-price">سعر الوحدة بالجنيه</label><input class="field" id="y-price" inputmode="decimal" name="price" placeholder="مثال: 3000000"></div>
+<div><label for="y-rent">الإيجار الشهري بالجنيه</label><input class="field" id="y-rent" inputmode="decimal" name="rent" placeholder="مثال: 20000"></div>
+<div><label for="y-cost">التكاليف السنوية بالجنيه</label><input class="field" id="y-cost" inputmode="decimal" name="cost" placeholder="صيانة وضرائب وغيرها"></div>
+</div>
+<dl aria-live="polite" class="calc-out">
+<div><dt>العائد الإجمالي</dt><dd data-out="gross"></dd></div>
+<div><dt>العائد الصافي</dt><dd data-out="net"></dd></div>
+<div><dt>سنوات الاسترداد</dt><dd data-out="payback"></dd></div>
+</dl>
+</form>
+<p>طريقة الحساب: العائد الإجمالي يساوي الإيجار السنوي مقسومًا على سعر الوحدة؛ والعائد الصافي يطرح التكاليف السنوية من الإيجار أولًا.</p>
+<p class="calc-note">النتيجة لا تحتسب فترات خلو الوحدة من المستأجر، ولا تغيّر سعر الوحدة مع الوقت.</p>
+</section>
+</div>
+{{ cta(L.cta_default, "page-cta", waHref, "tel:+" + site.phone, L) }}
+</article></div></div>
