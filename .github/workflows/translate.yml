@@ -1,0 +1,47 @@
+# Translates new or changed Arabic content into English, then commits the English files.
+# Cloudflare Pages rebuilds the site after the commit, so the English page appears a few minutes after publishing.
+name: Translate to English
+
+on:
+  push:
+    paths:
+      - "src/posts/**"
+      - "src/pages/**"
+      - "src/_data/site.json"
+      - "src/_data/home.json"
+      - "src/_data/sections.json"
+      - "src/_data/tools.json"
+  schedule:
+    - cron: "17 3 * * *"   # once a day: finishes anything left when the free daily allowance ran out
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: translate
+  cancel-in-progress: false
+
+jobs:
+  translate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: npm install --no-save --no-package-lock js-yaml@4.1.0
+      - run: node scripts/translate.mjs
+        env:
+          CF_ACCOUNT_ID: ${{ secrets.CF_ACCOUNT_ID }}
+          CF_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
+      - name: Commit the English files
+        run: |
+          git config user.name "translation-bot"
+          git config user.email "translation-bot@users.noreply.github.com"
+          git add -A src/en src/_data/site_en.json src/_data/home_en.json src/_data/sections_en.json src/_data/tools_en.json i18n-state.json
+          if git diff --cached --quiet; then echo "Nothing new to translate."; exit 0; fi
+          git commit -m "English translation update"
+          git pull --rebase
+          git push
