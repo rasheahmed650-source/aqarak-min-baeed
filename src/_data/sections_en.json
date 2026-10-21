@@ -3,50 +3,50 @@
     {
       "name": "Buying from Abroad",
       "slug": "buying-abroad",
-      "nav": "Buying",
-      "description": "The steps of buying while outside Egypt, and viewing a unit remotely.",
-      "intro": "The steps of buying while outside Egypt, and viewing a unit remotely.",
-      "cta": "Do you want a buying plan that fits living outside Egypt?",
+      "nav": "Purchase",
+      "description": "Steps to purchase while you are outside Egypt, and viewing the unit remotely.",
+      "intro": "Buying a property in Egypt while you are outside of it requires a different arrangement than direct purchasing, from remotely viewing the unit to payment and handover of the property.\n\nIn this section, we explain the steps one by one, so you know what you can do yourself and what you can delegate to others.",
+      "cta": "Do you want a purchase plan that suits your presence outside Egypt?",
       "icon": "KEY",
       "in_menu": true
     },
     {
-      "name": "Power of Attorney and Documents",
+      "name": "Power of attorney and documents",
       "slug": "poa",
-      "nav": "Documents",
+      "nav": "power of attorney",
       "description": "The official power of attorney, and the documents you need before and after signing.",
-      "intro": "The official power of attorney, and the documents you need before and after signing.",
-      "cta": "Do you need the power of attorney steps explained before you sign?",
+      "intro": "The official power of attorney is one of the most important documents that anyone who buys a property in Egypt and is away from it needs, as it allows a person you trust to sign or receive on your behalf. \n\nIn this section, we explain the types of powers of attorney, the documents required before and after signing, and how to avoid common mistakes.",
+      "cta": "Do you need clarification on the power of attorney steps before signing?",
       "icon": "DOC",
       "in_menu": true
     },
     {
-      "name": "Payments and Transfers",
+      "name": "Payment and Transfer",
       "slug": "payments",
-      "nav": "Payments",
-      "description": "Paying from abroad, transferring money, and installment plans for Egyptians abroad.",
-      "intro": "Paying from abroad, transferring money, and installment plans for Egyptians abroad.",
+      "nav": "Payment",
+      "description": "Payment from abroad, money transfer, and installment plans for expats.",
+      "intro": "Paying for a property in Egypt while you are outside of it has its own set of questions: how to transfer funds safely, what you pay and when, and whether the installment plan suits you.\n\nIn this section, we explain the payment and transfer methods step by step, so you know what to ensure before sending any amount.",
       "cta": "Do you want to know the best way to pay from abroad?",
       "icon": "COINS",
       "in_menu": true
     },
     {
-      "name": "Investing from Abroad",
+      "name": "Investing from a distance",
       "slug": "investing",
-      "nav": "Investing",
-      "description": "Renting out and managing your unit while you are away, and calculating the return.",
-      "intro": "Renting out and managing your unit while you are away, and calculating the return.",
-      "cta": "Do you want your return calculation reviewed before you decide?",
+      "nav": "Investment",
+      "description": "Renting your unit and managing it while you are traveling, and calculating the return.",
+      "intro": "Owning a property in Egypt can be an investment, but it requires management and you are far away: from renting the unit and following up on the tenant, to calculating the actual return after expenses\n\nIn this section, we explain how to manage your property remotely, and how to estimate its return with realistic numbers before you decide.",
+      "cta": "Do you want to review the yield account before you decide?",
       "icon": "CHART",
       "in_menu": true
     },
     {
-      "name": "Choosing a Unit",
+      "name": "Selecting the unit",
       "slug": "choosing",
-      "nav": "Units",
+      "nav": "Selecting the unit",
       "description": "How to choose a unit that suits your return or your family in Egypt.",
-      "intro": "How to choose a unit that suits your return or your family in Egypt.",
-      "cta": "Not sure which unit suits your family?",
+      "intro": "Choosing a unit while you are away from it is a decision that requires caution: where is the unit located? Does it suit your family or your return? And what should you make sure of before you pay? In this section, we explain the selection criteria and the questions you ask the developer or the owner, to choose a unit that really suits you.",
+      "cta": "Are you confused about choosing the right unit for your family?",
       "icon": "HOMES",
       "in_menu": true
     },
@@ -54,11 +54,11 @@
       "name": "General Articles",
       "slug": "articles",
       "nav": "General Articles",
-      "description": "Articles and advice for Egyptians abroad that do not belong to one category.",
-      "intro": "Articles and advice for Egyptians abroad that do not belong to one category.",
-      "cta": "Do you have a real estate question?",
+      "description": "Articles and tips for Egyptians abroad do not belong to one section.",
+      "intro": "Here we collect articles and tips that concern the Egyptian living abroad and do not belong to one category, from general questions about real estate in Egypt to notes that will benefit you in any step you take while you are away.",
+      "cta": "Do you have a real estate inquiry?",
       "icon": "DOC",
-      "in_menu": false
+      "in_menu": true
     }
   ]
 }
